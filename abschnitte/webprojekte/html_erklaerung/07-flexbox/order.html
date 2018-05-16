@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Flexbox Order & Align</title>
+		<link rel="stylesheet" href="navigation.css">
+		<link rel="stylesheet" href="../styles/explain.css">
+		<style media="screen">
+			#container{
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+
+				position: relative;
+				top: 50px;
+				left: 50px;
+
+				width: 60%;
+				height: 408px;
+
+				border: 3px purple solid;
+			}
+
+			.item{
+				background-color: rgb(222, 159, 255);
+				border: 1px black solid;
+
+				min-height: 50px;
+				min-width: 10px;
+			}
+
+			#item5{
+				align-self: stretch;
+			}
+			#item6{
+				order: -1;
+			}
+			#item7{
+				order: 1;
+			}
+
+		</style>
+	</head>
+	<body>
+
+		<nav>
+			<div class="navWrapper">
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="erklärung.html">Erklärung</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="umbruch.html">Umbruch</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="justify.html">Justify Content</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="order.html">Order & Align</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="shrink.html">Shrink & Grow</a></div>
+			</div>
+		</nav>
+
+		<div id="container">
+			<div class="item" id="item1">1</div>
+			<div class="item" id="item2">2</div>
+			<div class="item" id="item3">3</div>
+			<div class="item" id="item4">4 - außerdem wurden mit <code>align-items:center</code> die Items in die Mitte der Kreuzungsaxe gesetzt</div>
+			<div class="item" id="item5">5 - außer diese Box, sie wurde mit align-self wieder auf stretch gesetzt. (Standardwert)</div>
+			<div class="item" id="item6">6 - Diese Box wurde mit <code>order:-1</code> vor alle anderen gestellt obwohl die Reihenfolge im HTML-Code anders ist.</div>
+			<div class="item" id="item7">7 - Und diese mit <code>order:1</code> nach allen anderen. </div>
+			<div class="item" id="item8">8</div>
+			<div class="item" id="item9">9</div>
+			<div class="item" id="item10">10</div>
+		</div>
+	</body>
+</html>

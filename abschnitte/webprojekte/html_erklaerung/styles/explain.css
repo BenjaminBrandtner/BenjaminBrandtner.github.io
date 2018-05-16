@@ -1,0 +1,49 @@
+div.explain{
+background-color:#ccd1d1;
+border-radius:5px;
+border-width:1px;
+border-style: solid;
+border-color: #2e4053;
+padding:0px 4px 0px 4px; /*Top Right Bottom Left*/
+margin-top: 4px;
+}
+
+.explain h1{ /*Nur für Titelleiste "Erklärung"*/
+font-weight:bold;
+margin: 0px -4px 0px -4px;
+border-radius:4px 4px 0 0; /*Top-Left Top-Right Bottom-Right Bottom-Left*/
+padding-bottom: 4px;
+background-color: #6d61c1;
+
+color:#ffffff;
+text-align: center;
+text-shadow: 2px 2px 0px rgba(0, 0, 0, 1);
+
+}
+.explain h2{
+color:#2e86c1;
+margin-bottom: 0px;
+}
+
+.explain p{
+margin-top: 5px;
+}
+
+.explain pre#codeblock{
+background-color: #BEBEBE;
+white-space: pre-wrap;
+display: inline-block;
+padding: 1px;
+margin: 0;
+}
+
+.explain fieldset.references{
+	border-color: rgba(66, 0, 255, 0.44);
+	padding-left: 0px;
+}
+.explain fieldset.references li{
+	list-style-type: none;
+}
+.explain fieldset.references legend{
+	color:  rgba(66, 0, 255, 0.75);
+}

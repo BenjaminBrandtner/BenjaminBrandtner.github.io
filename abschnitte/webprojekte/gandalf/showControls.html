@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Thanks for allowing Popups!</title>
+		<script type="text/javascript">
+		//Hides the Summon Gandalf section and sets the controls to visible, then closes itself
+			window.opener.document.getElementById("summon").style.display="none";
+			hiddenElements = window.opener.document.getElementsByClassName("hidden");
+			for(i=0;i<hiddenElements.length;i++){
+				hiddenElements[i].style.visibility="visible";
+			};
+			window.close();
+		</script>
+	</head>
+	<body>
+
+	</body>
+</html>

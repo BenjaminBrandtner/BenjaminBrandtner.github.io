@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Flexbox Justify</title>
+		<link rel="stylesheet" href="navigation.css">
+		<link rel="stylesheet" href="../styles/explain.css">
+		<style media="screen">
+			#container, #containerb{
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+
+				position: relative;
+				top: 50px;
+				left: 50px;
+
+				width: 60%;
+				height: 108px;
+
+				border: 3px purple solid;
+			}
+			#containerb{
+				justify-content: flex-start;
+			}
+
+			.item{
+				background-color: rgb(247, 197, 19);
+				border: 1px black solid;
+
+				min-height: 50px;
+				min-width: 50px;
+
+				max-width: 100px;
+
+			}
+		</style>
+	</head>
+	<body>
+
+		<nav>
+			<div class="navWrapper">
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="erklärung.html">Erklärung</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="umbruch.html">Umbruch</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="justify.html">Justify Content</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="order.html">Order & Align</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="shrink.html">Shrink & Grow</a></div>
+			</div>
+		</nav>
+
+		<div id="container">
+			<div class="item" id="item1">1</div>
+			<div class="item" id="item2">2</div>
+			<div class="item" id="item3">3 - Mit <code>justify-content:space-between</code> </div>
+			<div class="item" id="item4">4</div>
+			<div class="item" id="item5">5</div>
+			<div class="item" id="item6">6</div>
+		</div>
+
+		<div id="containerb">
+			<div class="item" id="bitem1">1</div>
+			<div class="item" id="bitem2">2</div>
+			<div class="item" id="bitem3">3 - Mit <code>justify-content:flex-start</code> (Standard)</div>
+			<div class="item" id="bitem4">4</div>
+			<div class="item" id="bitem5">5</div>
+			<div class="item" id="bitem6">6</div>
+		</div>
+	</body>
+</html>

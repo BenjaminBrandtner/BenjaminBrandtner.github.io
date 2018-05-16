@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Gandalf</title>
+		<style media="screen">
+
+			#emblemContainer{
+				display: inline-block;
+				text-align: center;
+				width: 105px;
+				height: 110px;
+				max-height: 110px;
+				overflow: hidden;
+				/*This container prevents the rest of the page being nudged downward when the image enlarges during a mouse click*/
+			}
+			#emblem{
+				height: auto;
+				width: 95px;
+				cursor: pointer;
+			}
+			#emblem:active{
+				width: 100px;
+			}
+
+			form{
+				display: block;
+				width: 170px;
+			}
+			fieldset{
+				display: block;
+				margin-top: 10px;
+			}
+
+			.hidden{
+				visibility: hidden;
+			}
+		</style>
+		<script type="text/javascript">
+			var summoned=0;
+
+			var firstClick = true;
+			var sax = new Audio("sax.mp3");
+			sax.loop = true;
+
+			var openedWindows = new Array;
+			var fensterID = 0;
+
+			function allowPopups() {
+				/* Opens two popup-windows (popupDummy.html) through a recursive function call
+				 * This leads most browsers to start blocking popups and show the "Popup blocked"-button to the user
+				 * The last recursive call then writes the prompt "Allow Popups!" on the page
+				 * The user hopefully does so (I never actually check if they did)
+				 * The next click opens showControls.html which hides the "Summon Gandalf" section and reveals the controls */
+
+				summoned++;
+				if(summoned<=2){
+					setTimeout(allowPopups, 500);
+					window.open("popupDummy.html", "", "width=100,height=100,screenX=500px");
+				}
+				else if (summoned==3) {
+					document.getElementById("summon").innerHTML="<a href='javascript: allowPopups()'>Summon Gandalf</a> (Allow Popups!)"
+				}
+				else{
+					window.open("showControls.html", "", "width=100,height=100,screenX=500px");
+				}
+			}
+
+			function start(){
+
+				var location = document.forms.controls.location.value;
+				var size = document.forms.controls.size.value;
+				var sizeValue = document.forms.controls.sizeSlider.value;
+				var repeat = document.forms.controls.repeat.checked;
+				var repeatSpeed = document.forms.controls.speed.value;
+
+				openWindow(location, size, sizeValue);
+
+				if (firstClick) {
+					firstClick = false;
+					sax.play();
+				}
+				if(repeat){
+					var delay = 2200-repeatSpeed*200;
+					setTimeout(start, delay);
+				}
+			}
+
+			function openFiveWindows() {
+				for (var i = 0; i < 5; i++) {
+					start();
+				}
+			}
+
+			function openWindow(location, size, sizeValue) {
+				//Calculate real values for dimensions and location of the window to be opened
+				if(size=="fixed"){
+					var height = sizeValue*screen.availHeight/10;
+					var width = height*2;
+				}
+				else{
+					var height=Math.random()*screen.availHeight-150;
+					var width = height*2;
+				}
+				if(location=="ordered"){
+					var xPos = screen.availWidth-fensterID*10-width;
+					var yPos = fensterID*10;
+				}
+				else{
+					var xPos = Math.random()*(screen.availWidth-width);
+					var yPos = Math.random()*(screen.availHeight-height);
+				}
+
+				openedWindows[fensterID] = window.open("gandalf.html", fensterID, "scrollbars=no,width="+width+",height="+height+",screenX="+xPos+",screenY="+yPos);
+				fensterID++;
+			}
+
+			function closeAllWindows() {
+				for(var i=0;i<fensterID;i++){
+					openedWindows[i].close();
+				}
+				fensterID=0;
+
+				sax.pause();
+				firstClick = true;
+			}
+		</script>
+	</head>
+
+	<body onunload="closeAllWindows()">
+		<div id="summon"><a href="javascript: allowPopups()">Summon Gandalf</a></div>
+
+		<div class="hidden" id="emblemContainer"><img id="emblem" src="emblem.png" onclick="start()"></div>
+		<div class="hidden" id="emblemContainer"><img id="emblem" src="emblem_rot.png" onclick="openFiveWindows()"></div>
+
+		<form class="hidden" name="controls">
+			<fieldset>
+				<legend>Location</legend>
+				<label><input type="radio" name="location" value="ordered" checked>Ordered</label><br>
+				<label><input type="radio" name="location" value="random">Random</label>
+			</fieldset>
+			<fieldset>
+				<legend>Size</legend>
+				<label><input type="radio" name="size" value="random">Random</label><br>
+				<label><input type="radio" name="size" value="fixed" checked>Fixed:</label>
+				<input type="range" name="sizeSlider" value="5" min="1" max="8">
+			</fieldset>
+			<fieldset>
+				<legend>Danger Zone!</legend>
+				<label><input type="checkbox" name="repeat">Repeat</label><br>
+				Speed: <input type="range" name="speed" value="1" min="1" max="10">
+			</fieldset>
+		</form>
+
+		<p class="hidden"><a href="javascript:closeAllWindows()">Alle Fenster schließen.</a></p>
+
+	</body>
+</html>

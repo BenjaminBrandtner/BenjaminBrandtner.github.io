@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<link href="navigation.css" type="text/css"  rel="stylesheet"/>
+<link href="../styles/explain.css" type="text/css"  rel="stylesheet"/>
+</head>
+
+<body>
+
+<header>
+</header>
+
+<nav>
+ <ul>
+  <li><a href="index.html">Startseite</a></li>
+  <li><a href="kontakt.html">Kontakt</a></li>
+	<li ><a id="aktuelleSeite" href="explain.html">Erklärung</a></li>
+ </ul>
+</nav>
+
+<main>
+	<div class="explain">
+		<h1>Erklärung</h1>
+
+		<h2>HTML</h2>
+		<p>
+			Im Bereich nav legen wir eine ungeordnete Liste an. Die Listenpunkte enthalten anchor-tags zu anderen Seiten. Eines der a-Elemente erhält die id="aktuelleSeite".<br>
+			Mit css stylen wir jetzt nav, ul, li und a.
+		</p>
+
+		<h2>Ansprechen mit CSS</h2>
+		<p>
+			Da wir nicht jede ul oder a auf der gesamten Seite verändern wollen, müssen wir spezifizieren, dass nur solche im Bereich nav verändert werden:
+<pre id="codeblock">nav a {
+color: black;
+text-decoration: none;
+}</pre><br>
+		</p>
+
+		<h2>Pseudoklassen</h2>
+		<p>
+			Jedes Element kann mit einer Pseudklasse zusammen selektiert werden. Nicht alle Pseudoklassen machen bei allen Elementen Sinn, doch zb die :hover Pseudoklasse muss nicht nur mit Links, sondern kann mit jedem Element verwendet werden über dem die Maus hovern kann. Dennoch werden wir das typische a:hover verwenden.
+		</p>
+
+		<h2>Stylen mit CSS</h2>
+		<dl>
+			<dt>nav</dt><dd>Mit position:sticky und top:0px bleibt der Navigationsbereich auch beim Scrollen immer oben kleben.</dd>
+			<dt>ul</dt><dd>Stylen wir wie wir wollen. Mit Padding oben und unten können wir die Größe verändern.</dd>
+			<dt>li</dt><dd>Mit <code>position:inline;</code> bringen wir alle li in eine Zeile, und mit <code>list-style-type:none;</code> entfernen wir die Bullet-Points.</dd>
+			<dt>a</dt>
+			<dd>
+				padding: 4px 8px 4px 8px; Sorgt für mehr Leerraum um den Text, wodurch der Link zu einem schönen Knopf wird.<br><br>
+				Das a mit der id="aktuelleSeite" und ein a über dem gehovert wird bekommt eine andere Hintergrundfarbe:<br><br>
+<pre id="codeblock">nav a:hover, a#aktuelleSeite {
+  background-color: #ff8d00;
+}</pre>
+			</dd>
+		</dl>
+
+	</div>
+</main>
+
+<footer>
+</footer>
+
+</body>
+</html>

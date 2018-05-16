@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Flexbox Umbruch</title>
+		<link rel="stylesheet" href="navigation.css">
+		<link rel="stylesheet" href="../styles/explain.css">
+		<style media="screen">
+			#container{
+				display: flex;
+				flex-direction: column;
+				flex-wrap: wrap;
+
+				position: relative;
+				top: 50px;
+				left: 50px;
+
+				width: 60%;
+				height: 408px;
+
+				border: 3px purple solid;
+			}
+
+			.item{
+				background-color: rgb(32, 214, 37);
+				border: 1px black solid;
+
+
+				min-height: 50px;
+				min-width: 50px;
+			}
+		</style>
+	</head>
+	<body>
+
+		<nav>
+			<div class="navWrapper">
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="erklärung.html">Erklärung</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="umbruch.html">Umbruch</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="justify.html">Justify Content</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="order.html">Order & Align</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="shrink.html">Shrink & Grow</a></div>
+			</div>
+		</nav>
+
+		<div id="container">
+			<div class="item" id="item1">1 - Die Hauptaxis dieses Containers <br>ist durch <code>flex-direction:column</code> vertikal.</div>
+			<div class="item" id="item2">2 - Sobald ein Item am Ende der Hauptaxis <br>keinen Platz mehr hat,<br> wird eine neue Spalte angefangen.</div>
+			<div class="item" id="item3">3 - Ein Problem hier, dass mich zurzeit sehr nervt,<br> ist, dass der Text nicht gescheit umgebrochen wird</div>
+			<div class="item" id="item4">4 - sobald die Boxen umbrechen.</div>
+			<div class="item" id="item5">5 - Keine Ahnung wieso, für jetzt muss ich mir<br>mit manuellen Linebreaks behelfen. </div>
+			<div class="item" id="item6">6</div>
+			<div class="item" id="item7">7</div>
+			<div class="item" id="item8">8</div>
+			<div class="item" id="item9">9</div>
+			<div class="item" id="item10">10</div>
+		</div>
+	</body>
+</html>

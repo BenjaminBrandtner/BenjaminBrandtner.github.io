@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Flexbox Basics</title>
+		<link rel="stylesheet" href="navigation.css">
+		<link rel="stylesheet" href="../styles/explain.css">
+		<style media="screen">
+
+			.wrapper{
+				/*Positioniere die Box etwas mehr in die Mitte und gebe Rahmen und Farbe, um beim ausprobieren besser zu veranschaulichen was passiert*/
+				position: relative;
+				top: 10px;
+				left: 20px;
+				width: 85%;
+				height: 400px;
+				margin-bottom: 34px;
+				background-color: #ecc9ff;
+				border: double 5px #46006c;
+
+			}
+
+			.box{	/*Einstellungen für den Text in jeder Box, da jedes flex-item die Klasse box hat.*/
+				color: #ffffff;
+				font-size: 100px;
+				text-align: center;
+				text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2); /*h-shadow v-shadow blur-radius color */
+			}
+			/*Colors for each individual box */
+			.wrapper{ ; }
+			.box1{background-color: #cf1e74 }
+			.box2{background-color: #7e515f }
+			.box3{background-color: #50af3f }
+			.box4{background-color: #320efc }
+			.box5{background-color: #5cdfe0 }
+			.box6{background-color: #de5ec8 }
+			.box7{background-color: #b0ecfe }
+			.box8{background-color: #516c69 }
+			.box9{background-color: #324e63 }
+			.box10{background-color: #8e602a }
+		</style>
+	</head>
+	<body>
+
+
+		<nav>
+			<div class="navWrapper">
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="erklärung.html">Erklärung</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="umbruch.html">Umbruch</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="justify.html">Justify Content</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="order.html">Order & Align</a></div>
+				<div class="navBox"><img src="yellow-square-md.png" alt=""><a href="shrink.html">Shrink & Grow</a></div>
+			</div>
+		</nav>
+
+		<div class="wrapper">
+			<div class="box box1">1</div>
+			<div class="box box2">2</div>
+			<div class="box box3">3</div>
+			<div class="box box4">4</div>
+			<div class="box box5">5</div>
+			<div class="box box6">6</div>
+			<div class="box box7">7</div>
+			<div class="box box8">8</div>
+			<div class="box box9">9</div>
+			<div class="box box10">10</div>
+		</div>
+
+		<div class="explain">
+			<h1>Erklärung</h1>
+
+			<h2>Vorraussetzung</h2>
+			<p>Ein Elternelement wird mit css <em>display:flex</em> als flex-Container ausgezeichnet. Die unmittelbaren Kindelemente werden dadurch zu flex-items und können nun, mittels passenden CSS Attributen im Container oder im Item selber, manipuliert werden.</p>
+
+			<h2>Sinn</h2>
+			<p>
+				Das Flexible Box Layout Module (kurz flexbox) ist ein starkes Tool um mehrere Elemente eindimensional anzuordnen ohne die Notwendigkeit von genauen Größen-, Float- oder Positionsangaben. Eindimensional heißt, die Elemente werden zeilen oder spaltenweise angeordnet, nicht jedoch beides gleichzeitig, dafür eignet sich stattdessen das grid-Layout. Durch optionalem Umbruch von Elementen am Container-Rand entsteht eine Ausnahme zu der eindimensionalen Anordnung.<br>
+				Eine flexbox ändert die Größe und Position seiner Elemente mit Rücksicht auf den Inhalt und Angaben wie min-width oder min-height so, dass sie auch beim Ändern der Anzeigegröße gut aussehen, daher eignet es sich zur Erstellung von <b>Teilen</b> von Webseiten (zb. Navigationsleiste, kleine Strukturen) die auf verschieden großen Geräten gut aussehen sollen.
+			</p>
+
+			<h2>Eigenschaften für das Elternelement</h2>
+			<dl>
+			  <dt>display:flex</dt><dd> Damit wird dieses Element zum flex-Container und alle direkten Kindelemente zu flex-items</dd>
+
+			  <dt>flex-direction</dt><dd> Gibt die Richtung in die die Flex-Items ausgerichtet werden sollen (die Hauptaxe). Mögliche Werte:<br>
+				</dt><dd> row (Standard)</dt><dd> column</dt><dd> row-reverse</dt><dd> column-reverse</dd>
+
+			  <dt>flex-wrap</dt><dd> Gibt an, ob Zeilenumbruch stattfinden soll. Mögliche Werte:<br>
+				</dt><dd> nowrap (Standard)</dt><dd> wrap</dt><dd> wrap-reverse</dd>
+
+			  <dt>justify-content</dt><dd> <b>Gibt an, wie die Flex-Items entlang der Hauptaxe verteilt werden sollen</b>, wenn noch Platz übrig ist. Dies passiert zum Beispiel, wenn die Items eine feste oder maximale Höhe/Breite haben, oder nicht genug Inhalt haben, um die gesamt Box auszufüllen. Mögliche Werte:<br>
+				</dt><dd> flex-start (Standard)</dt><dd> flex-end</dt><dd> center</dt><dd> space-between</dt><dd> space-around</dt><dd> space-evenly</dd>
+
+			  <dt>align-items</dt><dd> <b>Gibt an, wie die Flex-Items entlang der Kreuzungsaxe verteilt werden sollen</b>, wenn noch Platz ist. Standardmäßig dehnen Sie sich aus, um die gesamte Höhe/Breite des Elternelements auszufüllen, es sei denn sie haben eine fixe oder maximale Höhe/Breite.<br>
+				</dt><dd> flex-start</dt><dd> flex-end</dt><dd> center</dt><dd> baseline</dt><dd> stretch (Standard)</dd>
+
+			  <dt>align-content</dt><dd> <b>Gibt bei mehreren Zeilen an, wie die Zeilen im verfügbaren Raum aufgeteilt werden sollen</b>. Standardmäßig dehnen Sie sich aus, um die gesamte Höhe/Breite einzunehmen.<br>
+				</dt><dd> flex-start</dt><dd> flex-end</dt><dd> center</dt><dd> space-between</dt><dd> space-around</dt><dd> stretch (Standard)</dd>
+			</dl>
+
+			<h2>Eigenschaften für die Kindelemente</h2>
+			<dl>
+			  <dt>order</dt><dd> Standardmäßig werden Items anhand ihrer Reihenfolge im HTML-Code angezeigt. Hiermit kann eine andere Reihenfolge festgelegt werden. Der Standardwert dieser Eigenschaft ist 0, daher kann mit negativen/positiven Zahlen ein Item vor/nach der HTML-Reihenfolge angezeigt werden.</dd>
+
+			  <dt>flex-grow</dt><dd> Diese Eigenschaft erhält eine einheitenlose Zahl, die die Proportionen der Größe aller Items festlegt. Ein Element mit <em>flex-grow:2</em> dehnt sich doppelt so viel aus wie ein Element mit <em>flex-grow:1</em></dd>
+
+			  <dt>flex-shrink</dt><dd> ??? </dd>
+
+			  <dt>flex-basis</dt><dd> Legt die Größe eines Elementes fest, bevor es vergrößert oder verkleinert wird um den freien Platz auszufüllen. Mit dem Standard-Wert auto wird die widhth/height Eingeschaft angeschaut.</dd>
+
+			  <dt>flex</dt><dd> Shorthand für die letzten drei Eigenschaften</dd>
+			  <dt>align-self</dt><dd> Damit kann dieses Element die in <em>align-items </em>festgelegte Einstellung überschreiben und an einem anderen Punkt auf der Kreuzungsaxe platziert werden.</dd>
+			</dl>
+
+			<fieldset class="references">
+				<legend>Referenzen</legend>
+
+				<ul>
+				<li><a href=https://www.youtube.com/watch?v=sewV3LsmoXI>Kurze gute Youtube Tutorialserie</a></li>
+					<li><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">Gute Kurzübersicht</a></li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox">Mit Erklärung</a> </li>
+				</ul>
+			</fieldset>
+		</div>
+
+	</body>
+</html>

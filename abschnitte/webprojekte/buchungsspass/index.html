@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Buchungsspaß</title>
+		<style>
+			.zahlfeld{
+				text-align: right;
+				width: 5em;
+			}
+
+			#ausgabe_kauf, #ausgabe_zahlung{
+		    font-family: "Consolas", "Lucida Console", monospace;
+			}
+
+			.bs{
+				position: absolute;
+				width: 7em;
+				text-align: right;
+			}
+			.bs#S{
+				left: 11em;
+			}
+			.bs#H{
+				left: 16em;
+			}
+		</style>
+
+		<script type="text/javascript">
+			var grundangabenVeraendert;
+
+			var kaufrichtung;
+			var art;
+			var nettopreis;
+			var steuersatz;
+			var bezugskosten;
+			var skonto;
+
+			var kontengruppe;
+			var kontengruppe1;
+			var kontengruppe2;
+			var steuerbetrag;
+			var rechnungsbetrag;
+
+			var skontobetrag;
+			var ueberweisungsbetrag;
+			var steuerkorrektur;
+
+			function ueberpruefeGrundangaben() {
+				kaufrichtung = document.getElementById("kaufrichtung").value;
+
+				if (kaufrichtung=="Kauf") {
+					document.getElementById("t_weitereAngaben").innerHTML="erhalten";
+					document.getElementById("t_zahlung1").innerHTML="bezahlen";
+					document.getElementById("t_zahlung2").innerHTML="erhalten";
+				}
+				else{
+					document.getElementById("t_weitereAngaben").innerHTML="gewähren";
+					document.getElementById("t_zahlung1").innerHTML="erhalten";
+					document.getElementById("t_zahlung2").innerHTML="gewähren";
+				}
+
+			}
+
+			function startKauf() {
+				var akzeptabelImKauf = ["Rohstoffe", "Vorprodukte", "Hilfsstoffe", "Betriebsstoffe", "Handelswaren"];
+				var akzeptabelImVerkauf = ["Handelswaren", "Eigenerzeugnisse"];
+
+				art = document.getElementById("art").value;
+
+				if (eval("akzeptabelIm"+kaufrichtung).indexOf(art) == -1){ //Variablenname wird zusammengefügt aus "akzeptabelIm" + dem Wert, der in kaufrichtung steht ("Kauf" oder "Verkauf")
+					alert(kaufrichtung+" von "+art+" ist unlogisch.");
+				}
+				else{
+					grundangabenVeraendert=false;
+
+					nettopreis = parseFloat(document.getElementById("nettopreis").value);
+					steuersatz = parseFloat(document.getElementById("steuersatz").value);
+					var sofortrabatt = parseFloat(document.getElementById("sofortrabatt").value);
+					bezugskosten = parseFloat(document.getElementById("bezugskosten").value);
+
+					nettopreis = nettopreis*(100-sofortrabatt)/100;
+					steuerbetrag = (nettopreis+bezugskosten)*steuersatz/100;
+					rechnungsbetrag = nettopreis+bezugskosten+steuerbetrag;
+
+					if (kaufrichtung=="Kauf"){
+						kauf();
+					}
+					else {
+						verkauf();
+					}
+				}
+			}
+
+			function kauf() {
+				switch (art) {
+					case "Rohstoffe":
+						kontengruppe="6000";
+						break;
+					case "Vorprodukte":
+						kontengruppe="6010";
+						break;
+					case "Hilfsstoffe":
+						kontengruppe="6020";
+						break;
+					case "Betriebsstoffe":
+						kontengruppe="6030";
+						break;
+					case "Handelswaren":
+						kontengruppe="6080";
+						break;
+				}
+				kontengruppe1 = kontengruppe.replace(/0$/, "1"); // /0$/ ist RegEx: es matcht die letzte Null in einem String
+				kontengruppe2 = kontengruppe.replace(/0$/, "2");
+
+				document.getElementById("ausgabe_kauf").innerHTML = "<h1>Einkauf Buchungssatz<\/h1>"+
+				kontengruppe+" AW "+art+" <span class='bs' id='S'>"+nettopreis.toFixed(2)+"<\/span><br>"+
+				kontengruppe1+" Bezugskosten <span class='bs' id='S'>"+bezugskosten.toFixed(2)+"<\/span><br>"+
+				"2600 Vorsteuer <span class='bs' id='S'>"+steuerbetrag.toFixed(2)+"<\/span><br>"+
+				"an 4400 VLL <span class='bs' id='H'>"+rechnungsbetrag.toFixed(2)+"<\/span><br>";
+			}
+
+			function verkauf() {
+				switch (art) {
+					case "Eigenerzeugnisse":
+						kontengruppe="5000";
+						break;
+					case "Handelswaren":
+						kontengruppe="5100";
+						break;
+				}
+				kontengruppe1 = kontengruppe.replace(/0$/, "1");
+
+				var umsatzerloese = nettopreis+bezugskosten;
+
+				document.getElementById("ausgabe_kauf").innerHTML = "<h1>Verkauf Buchungssatz<\/h1>"+
+				"2400 FLL <span class='bs' id='S'>"+rechnungsbetrag.toFixed(2)+"<\/span><br>"+
+				"an "+kontengruppe+" UE "+art+" <span class='bs' id='H'>"+umsatzerloese.toFixed(2)+"<\/span><br>"+
+				"&nbsp&nbsp&nbsp4800 Umsatzsteuer <span class='bs' id='H'>"+steuerbetrag.toFixed(2)+"<\/span><br>";
+			}
+
+			function startZahlung() {
+				if(grundangabenVeraendert==true){
+					document.getElementById("ausgabe_zahlung").innerHTML = "";
+					alert("Veränderungen der Grundangaben erkannt. Bitte zuerst den ersten Buchungssatz bilden.");
+				}
+				else if (grundangabenVeraendert==undefined) {
+					alert("Bitte zuerst den ersten Buchungssatz bilden.");
+				}
+				else{
+					skonto = parseFloat(document.getElementById("skonto").value);
+					var skontobezug = document.getElementById("skontobezug").value;
+
+					if (skontobezug=="warenwert") {
+						skontobetrag = nettopreis*skonto/100;
+					}
+					else{
+						skontobetrag = rechnungsbetrag*skonto/100;
+					}
+
+					steuerkorrektur = skontobetrag*steuersatz/100;
+					ueberweisungsbetrag = rechnungsbetrag-skontobetrag-steuerkorrektur;
+
+					eval("zahlung"+kaufrichtung+"()");
+				}
+			}
+
+			function zahlungKauf() {
+				document.getElementById("ausgabe_zahlung").innerHTML = "<h1>Zahlung Buchungssatz<\/h1>"+
+				"4400 VLL <span class='bs' id='S'>"+rechnungsbetrag.toFixed(2)+"<\/span><br>"+
+				"an 2800 Bank <span class='bs' id='H'>"+ueberweisungsbetrag.toFixed(2)+"<\/span><br>"+
+				"&nbsp&nbsp&nbsp"+kontengruppe2+" Nachlässe <span class='bs' id='H'>"+skontobetrag.toFixed(2)+"<\/span><br>"+
+				"&nbsp&nbsp&nbsp2600 Vorsteuer <span class='bs' id='H'>"+steuerkorrektur.toFixed(2)+"<\/span><br>";
+			}
+
+			function zahlungVerkauf() {
+				document.getElementById("ausgabe_zahlung").innerHTML = "<h1>Zahlung Buchungssatz<\/h1>"+
+				"2800 Bank <span class='bs' id='S'>"+ueberweisungsbetrag.toFixed(2)+"<\/span><br>"+
+				""+kontengruppe1+" Berichtigungen <span class='bs' id='S'>"+skontobetrag.toFixed(2)+"<\/span><br>"+
+				"4800 Umsatzsteuer <span class='bs' id='S'>"+steuerkorrektur.toFixed(2)+"<\/span><br>"+
+				"an 2400 FLL <span class='bs' id='H'>"+rechnungsbetrag.toFixed(2)+"<\/span><br>";
+
+			}
+		</script>
+
+	</head>
+	<body onload="javascript:ueberpruefeGrundangaben()">
+		<form onchange="ueberpruefeGrundangaben();grundangabenVeraendert=true">
+			<fieldset>
+				<legend>Grundangaben</legend>
+				Wir
+				<select id="kaufrichtung">
+					<option value="Kauf">kaufen</option>
+					<option value="Verkauf">verkaufen</option>
+				</select>
+				<select id="art">
+					<option value="Rohstoffe">Rohstoffe</option>
+					<option value="Vorprodukte">Vorprodukte</option>
+					<option value="Hilfsstoffe">Hilfsstoffe</option>
+					<option value="Betriebsstoffe">Betriebsstoffe</option>
+					<option selected value="Handelswaren">Handelswaren</option>
+					<option value="Eigenerzeugnisse">Eigenerzeugnisse</option>
+				</select>
+				für
+				<input class="zahlfeld" id="nettopreis" type="text" value="1000.00">
+				€ netto, zu einem Steuersatz von
+				<select id="steuersatz">
+					<option value="0">0%</option>
+					<option value="7">7%</option>
+					<option selected value="19">19%</option>
+				</select>.
+			</fieldset>
+
+			<fieldset>
+				<legend>Weitere Angaben</legend>
+				Wir <span id="t_weitereAngaben"></span> einen Sofortrabatt von
+				<input class="zahlfeld"  id="sofortrabatt" type="text" value="0"> % und die Bezugskosten betragen
+				<input class="zahlfeld"  id="bezugskosten" type="text" value="0"> €.
+			</fieldset><br>
+
+			<button type="button" onclick="startKauf()">Buchungssatz bilden</button>
+		</form><br>
+
+		<div id="ausgabe_kauf"></div><br>
+
+		<form>
+			<fieldset>
+				<legend>Zahlung</legend>
+				Wir <span id="t_zahlung1"></span> den Rechnungsbetrag und <span id="t_zahlung2"></span> Skonto von <input class="zahlfeld" id="skonto" type="text" value="0"> % auf den
+				<select id="skontobezug">
+					<option value="warenwert">Warenwert</option>
+					<option value="rechnungsbetrag">Rechnungsbetrag</option>
+				</select>
+			</fieldset><br>
+			<button type="button" onclick="startZahlung()">Buchungssatz bilden</button>
+		</form><br>
+
+		<div id="ausgabe_zahlung"></div>
+	</body>
+</html>
