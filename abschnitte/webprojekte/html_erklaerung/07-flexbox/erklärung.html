@@ -15,9 +15,11 @@
 				width: 85%;
 				height: 400px;
 				margin-bottom: 34px;
-				background-color: #ecc9ff;
+				padding: 6px;
 				border: double 5px #46006c;
 
+				overflow: auto;
+				resize: both;
 			}
 
 			.box{	/*Einstellungen für den Text in jeder Box, da jedes flex-item die Klasse box hat.*/
@@ -27,7 +29,6 @@
 				text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2); /*h-shadow v-shadow blur-radius color */
 			}
 			/*Colors for each individual box */
-			.wrapper{ ; }
 			.box1{background-color: #cf1e74 }
 			.box2{background-color: #7e515f }
 			.box3{background-color: #50af3f }
@@ -68,6 +69,9 @@
 
 		<div class="explain">
 			<h1>Erklärung</h1>
+
+			<h2>Try it out:</h2>
+			<p>An der linken unteren Ecke kannst die Größe der obigen Demonstrationen verändern.</p>
 
 			<h2>Vorraussetzung</h2>
 			<p>Ein Elternelement wird mit css <em>display:flex</em> als flex-Container ausgezeichnet. Die unmittelbaren Kindelemente werden dadurch zu flex-items und können nun, mittels passenden CSS Attributen im Container oder im Item selber, manipuliert werden.</p>

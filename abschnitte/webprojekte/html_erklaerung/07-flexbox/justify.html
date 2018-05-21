@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="navigation.css">
 		<link rel="stylesheet" href="../styles/explain.css">
 		<style media="screen">
-			#container, #containerb{
+			#container, #containerb, #containerc{
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
@@ -19,9 +19,15 @@
 				height: 108px;
 
 				border: 3px purple solid;
+
+				overflow: auto;
+				resize: both;
 			}
 			#containerb{
 				justify-content: flex-start;
+			}
+			#containerc{
+				justify-content: center;
 			}
 
 			.item{
@@ -57,6 +63,8 @@
 			<div class="item" id="item6">6</div>
 		</div>
 
+		<p></p>
+
 		<div id="containerb">
 			<div class="item" id="bitem1">1</div>
 			<div class="item" id="bitem2">2</div>
@@ -64,6 +72,17 @@
 			<div class="item" id="bitem4">4</div>
 			<div class="item" id="bitem5">5</div>
 			<div class="item" id="bitem6">6</div>
+		</div>
+
+		<p></p>
+
+		<div id="containerc">
+			<div class="item" id="citem1">1</div>
+			<div class="item" id="citem2">2</div>
+			<div class="item" id="citem3">3 - Mit <code>justify-content:center</code></div>
+			<div class="item" id="citem4">4</div>
+			<div class="item" id="citem5">5</div>
+			<div class="item" id="citem6">6</div>
 		</div>
 	</body>
 </html>
