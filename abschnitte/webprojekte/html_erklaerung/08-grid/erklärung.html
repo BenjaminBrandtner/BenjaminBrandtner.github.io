@@ -19,18 +19,19 @@
 		#box6{background-color: #ff3939;}
 
 		#demo{
-			display: grid;
-			
-			grid-template-columns: 1fr 130px;
-			grid-template-rows: 80px 3fr 1fr 40px;
-			
 			border: 5px double rgb(189, 34, 189);
-			
+			width: 80%;
 			overflow: auto;
 			resize: both;
-			
 		}
+
+		/* Relevant grid code starts here: */
+		#demo{
+			display: grid;
 			
+			grid-template-columns: 1fr 130px ;
+			grid-template-rows: 80px 3fr 1fr 40px ;
+		}
 		#box1{
 			grid-column: 1/3;
 		}
@@ -49,18 +50,86 @@
 		<div class="box" id="box5">5</div>
 		<div class="box" id="box6">6</div>
 	</div>
-	
+
 	<div class="explain">
 		<h1>Erklärung</h1>
 
 		<h2>Sinn</h2>
 		<p>
-			Das CSS-Grid ist eine relativ neue Erfindung und löst einige Probleme im Bereich Responsive Design. Mit Media-Queries und einem zum Gerät passenden Grid, ist es möglich, die komplette Webseite in verschiedene Bereiche einzuteilen, und dann Abschnitte unserer HTML-Datei in diese Bereiche einzufügen, wodurch die ursprüngliche Reihenfolge ggf. außer Kraft gesetzt wird. Ebenso ist die präzise Positionierung verschiedener Abschnitte nebeneinander möglich, weitaus kontrollierbarer und fehlerfreier als bisherige Methoden (<code>float:left</code>).
+			Das css-grid ist eine relativ neue Erfindung und löst einige Probleme im Bereich responsive design. Mit media-queries und einem zum Gerät passenden Grid, ist es möglich, die komplette Webseite in Reihen und Spalten einzuteilen, und dann Abschnitte unserer html-Datei in diese Bereiche einzufügen, wodurch die ursprüngliche Reihenfolge ggf. außer Kraft gesetzt wird. Ebenso ist die präzise Positionierung verschiedener Abschnitte nebeneinander möglich, weitaus kontrollierbarer und fehlerfreier als bisherige Methoden (<code>float:left</code>).
+		</p>
+
+		<h2>Vorlage</h2>
+		<p>
+			Ein Element wird mit<code>display:grid</code> zu einem grid-container erklärt. Alle direkten Kindelemente werden dadurch zu grid-items. Im Elternelement muss jetzt eine grid Vorlage (template) definiert werden, dh. Der verfügbare Platz in diesem Element wird in Reihen und Spalten aufgeteilt und die Grenzen derer werden definiert. Dies geschieht folgendermaßen:
+		</p>
+<pre id="codeblock">
+.container {
+	grid-template-columns: 40px 50px 1fr 50px 40px ;
+	grid-template-rows: 25% 100px 1fr ;
+}</pre>
+		<p>
+			Mithilfe einer Leerzeichen-getrennten Liste an Größenangaben (absolut oder relativ) wird der Abstand zwischen den vertikalen und horizontalen Grenzen angegeben. Die Leerzeichen kann man sich dabei vorstellen als die Gitterlinien und die Größenangaben als der Abstand zwischen zwei Linien.<br>
+			Wir haben auch Zugriff auf eine neue Größeneinheit, das fraction (fr). Ein fraction steht dabei für den verfügbaren Platz nachdem alle absoluten Größen gezeichnet wurden. Werden mehrere fr verwendet, zb: <code>grid-template-columns: 1fr 1fr 2fr 3fr ;</code> dann stehen die Zahlen für die relative Größe zueinander, also ein 2fr Bereich ist doppelt so groß wie ein 1fr Bereich.<br>
+			Man kann allen Linien auch Namen geben. Tut man es nicht werden sie einfach durchnummeriert.
+		</p>
+
+		<h2>Inhalt einfügen</h2>
+		<p>
+			Standardmäßig fügen sich die direkten Kindelemente unseres grid-containers nun ihrer Reihenfolge in der html-Datei nach in die angelegte grid-Vorlage ein, wobei jedes Element eine Zelle unserer Vorlage einnimmt. Um die Reihenfolge oder die Größe einzelner Bereiche zu verändern gibt es zwei Möglichkeiten:
+		</p>
+
+		<h3>grid-row & grid-column</h3>
+		<p>
+			Wir geben die Startlinie und die Endlinie eines grid-Items an. Ein besipielhaftes Items soll die ersten drei Spalten der ersten Zeile einnehmen. Es gibt drei verschiedene Lösungen. Die ausführliche:
+		</p>
+<pre id="codeblock">
+#box1{
+	grid-column-start: 1;
+	grid-column-end: 4;
+}
+</pre>
+		<p>
+			Beachte: Es beginnt bei Linie 1 und endet bei Linie 4, nimmt also 3 Zellen ein. Wir könnten auch das Shorthand verwenden: <code>grid-column: 1/4;</code><br>
+			Oder wir geben nicht den Endpunkt an, sondern beschreiben, wie viele Zellen das Item einnehmem soll: <code>gird-column: span 3;</code><br>
+			Haben wir beim Anlegen der Vorlage den Linien Namen gegeben, können wir diese hier anstelle der Zahlen benutzen.
+		</p>
+
+
+		<h3>grid-template-areas</h3>
+		<p>
+			Hier wird den einzelnen grid-Items ein Name vergeben, der dann im grid-Container benutzt wird um eine Art Zeichnung des gewünschten Layouts anzufertigen. Außerdem steht uns der Punkt (.) zur Verfügung um eine leere Zelle zu definieren.
+		</p>
+<pre id="codeblock">
+#box1{
+	grid-area: header;
+}
+#box2{
+	grid-area: nav;
+}
+usw.
+
+#container{
+	gird-template-columns: 1fr 1fr 1fr 100px ;
+	grid-template-rows: 100px 50px 1fr 10% ;
+	grid-template-areas:
+		"header header header header"
+		"nav nav . sidebar"
+		"content content content sidebar"
+		"footer footer footer .";
+}
+</pre>
+
+		<h2>Aussehen und Ausrichtung</h2>
+		<p>
+			Es gibt viele Eigenschaften für den container und die items um deren Aussehen und Ausrichtung anzupassen. Viele der möglichen Attribute sind die selben wie bei flexbox. Ich empfehle die unten verlinkte Seite css-tricks.com für eine gute Übersicht mit vielen grafischen Darstellungen. 
 		</p>
 
 		<fieldset>
 			<legend>Referenzen</legend>
-			<a href="https://www.youtube.com/watch?v=HgwCeNVPlo0">Youtube-Video mit guter Erklärung und verständnisfördernden Animationen.</a>
+			<a href="https://www.youtube.com/watch?v=HgwCeNVPlo0">Youtube | Video mit guter Erklärung und verständnisfördernden Animationen.</a><br>
+			<a href="https://css-tricks.com/snippets/css/complete-guide-grid/">css-tricks.com | Gute Übersicht</a>
+
 		</fieldset>
 	</div>
 </body>
