@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Telefonbuch</title>
+	<style>
+		form {
+			display: inline-block;
+			background-color: rgb(221, 221, 221);
+		}
+
+		input.textfeld {
+			position: absolute;
+			left: 10em;
+		}
+		#telefonbuch {
+			margin: 1em;
+			display: inline-block;
+			background-color: rgb(238, 226, 217);
+		}
+		.telefonbuchzeile {
+			cursor: pointer;
+		}
+	</style>
+	<script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
+	<script src="jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//Event Listener
+			$("#anlegen").click(eintragAnlegen);
+			$("#anzeigen").click(anzeigen);
+			$("#loeschen").click(eintraegeLoeschen);
+			$("#speichern").click(speichern);
+			$("#laden").click(laden);
+			$("#beispielladen").click(beispielladen);
+
+			
+			//Anfangsdaten
+			var telefonbuch = new Array();
+
+			//Funktionen
+			function anzeigen(){
+				/* Erstellt eine Tabelle in der jedes tr-Tag ein Attribut data-selected bekommt, dass zu Beginn auf "FALSE" steht.
+				Erstellt außerdem einen Eventlistener für jede telefonbuchzeile der auf einen Klick wartet und daraufhin data-selected auf "TRUE" setzt und die Hintergrundfarbe ändert
+				*/
+				
+				var i=0;
+				var output="<table><tr><th>Vorname</th><th>Nachname</th><th>Telefon</th><tr>";
+				telefonbuch.forEach(function (cur) {
+					output+="<tr class='telefonbuchzeile' data-selected='FALSE' ><td>"+cur.vorname+"</td><td>"+cur.nachname+"</td><td>"+cur.telefon+"</td></tr>\n";
+					i++;
+				});
+				output+="</table>"
+
+				document.getElementById("telefonbuch").innerHTML=output;
+				
+				$(".telefonbuchzeile").click(function () {
+					if (this.dataset.selected == "FALSE") {
+						this.style.backgroundColor = "lightblue";
+						this.dataset.selected = "TRUE";
+					}
+					else{
+						this.style.backgroundColor = "inherit";
+						this.dataset.selected = "FALSE";
+					}
+			});
+
+			}
+
+			function beispielladen() {
+				telefonbuch = [
+					{
+						vorname: "Sally",
+						nachname: "Seton",
+						telefon: 1349755436
+					},
+					{
+						vorname: "Bernd",
+						nachname: "Blaumann",
+						telefon: 3578964288
+					},
+					{
+						vorname: "Krosus",
+						nachname: "Krabbus",
+						telefon: 1234879874
+					}
+				];
+
+				anzeigen();
+				
+			}
+			function eintragAnlegen() {
+				var neuerEintrag = {
+					vorname: document.eingabe.vorname.value,
+					nachname: document.eingabe.nachname.value,
+					telefon: parseInt(document.eingabe.telefon.value)
+				};
+				telefonbuch.push(neuerEintrag);
+				anzeigen();
+			}
+
+			function eintraegeLoeschen() {
+				/* Geht durch alle Tabellenzeilen durch und prüft welche Stellen markiert sind. Diese Stellen löscht es aus dem Array telefonbuch. */
+
+				var zeilen = $(".telefonbuchzeile");
+
+				for(i=zeilen.length-1;i>=0;i--){ //Rückwärts durchgehen, da splice() die Länge und Reihenfolge des Arrays verändert.
+					if(zeilen[i].dataset.selected == "TRUE"){
+						telefonbuch.splice(i, 1);
+					}
+				}
+					
+				anzeigen();
+			}
+
+
+			function speichern() {
+				//Lösung mit FileSaver.js
+				var telefonbuchdatei = new Blob([JSON.stringify(telefonbuch)], {type: "text/plain;charset=utf-8"});
+				saveAs(telefonbuchdatei, "telefonbuch.json");
+
+				// Hackige, pure Javascript Lösung
+				// var myjson = JSON.stringify(telefonbuch);
+				// downloadElement = document.createElement('a');
+				// downloadElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(myjson));
+				// downloadElement.setAttribute('download', "telefonbuch.json");
+				// downloadElement.click();
+			}
+
+			function laden() {
+				var file = document.getElementById("fileinput").files[0];
+				var reader = new FileReader();
+
+				if (file == undefined) {
+					alert("Bitte eine Datei auswählen.");
+				}
+				else{
+					reader.readAsText(file);
+					reader.onload = function () {
+						try {
+							telefonbuch = JSON.parse(reader.result);
+						} catch (error) {
+							alert("Datei konnte nicht gelesen werden");
+						}
+
+						anzeigen();
+					}
+				}
+
+			}	
+
+			// TODO:
+			// telefonbuch laden interface hübscher machen
+			// evtl. Telefonbuch-Tabelle hübscher einblenden (vllt jQuery roll down)
+
+		});
+	</script>
+</head>
+<body>
+	<form name="eingabe">
+		<fieldset>
+			<label>Vorname: <input class="textfeld" type="text" name="vorname"></label><br>
+			<label>Nachname: <input class="textfeld" type="text" name="nachname"></label><br>
+			<label>Telefonnummer: <input class="textfeld" type="text" name="telefon"></label><br><br>
+			<input type="button" id="anlegen" value="Neuen Eintrag anlegen">
+			<input type="button" id="loeschen" value="Markierte Einträge löschen">
+		</fieldset>
+		<fieldset>
+			<input type="button" id="beispielladen" value="Beispielhaftes Telefonbuch laden">
+		</fieldset>
+		<fieldset>
+			<input type="button" id="speichern" value="Telefonbuch speichern"><br><br>
+			<input type="file" id="fileinput" accept=".json"><br>
+			<input type="button" id="laden" value="Telefonbuch laden">
+		</fieldset>
+
+	</form><hr>
+	<div id="telefonbuch"></div>
+</body>
+</html>
