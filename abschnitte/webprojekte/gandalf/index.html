@@ -4,35 +4,70 @@
 		<meta charset="utf-8">
 		<title>Gandalf</title>
 		<style media="screen">
-
-			#emblemContainer{
+			#emblemContainer {
+				/*This container prevents the rest of the page being nudged downward when the image enlarges during a mouse click*/
 				display: inline-block;
 				text-align: center;
 				width: 105px;
 				height: 110px;
 				max-height: 110px;
 				overflow: hidden;
-				/*This container prevents the rest of the page being nudged downward when the image enlarges during a mouse click*/
 			}
-			#emblem{
+		
+			#emblem {
 				height: auto;
 				width: 95px;
 				cursor: pointer;
 			}
-			#emblem:active{
+		
+			#emblem:active {
 				width: 100px;
 			}
-
-			form{
+		
+			#counter {
+				position: relative;
+				display: inline-block;
+				margin-left: 20px;
+			}
+			#tooltip {
+				/*Most of the following code is just copy/paste from the w3schools page on tooltips */
+				opacity: 0;
+				position: absolute;
+				background-color: rgb(233, 199, 127);
+				text-align: center;
+				padding: 5px 0;
+				border-radius: 6px;
+				z-index: 1;
+				width: 34px;
+				bottom: 105%;
+				left: 50%;
+				margin-left: -17px;
+				transition: 500ms;
+			}
+			#tooltip::after {
+				content: "";
+				position: absolute;
+				top: 100%;
+				left: 50%;
+				margin-left: -5px;
+				border-width: 5px;
+				border-style: solid;
+				border-color: rgb(233, 199, 127) transparent transparent transparent;
+			}
+			#counter:hover #tooltip {
+				opacity: 1;
+			}
+		
+			form {
 				display: block;
 				width: 170px;
 			}
-			fieldset{
+			fieldset {
 				display: block;
 				margin-top: 10px;
 			}
-
-			.hidden{
+		
+			.hidden {
 				visibility: hidden;
 			}
 		</style>
@@ -45,6 +80,7 @@
 
 			var openedWindows = new Array;
 			var fensterID = 0;
+			var lifetimeOpened;
 
 			function allowPopups() {
 				/* Opens two popup-windows (popupDummy.html) through a recursive function call
@@ -67,14 +103,11 @@
 			}
 
 			function start(){
-
 				var location = document.forms.controls.location.value;
 				var size = document.forms.controls.size.value;
 				var sizeValue = document.forms.controls.sizeSlider.value;
 				var repeat = document.forms.controls.repeat.checked;
 				var repeatSpeed = document.forms.controls.speed.value;
-
-				openWindow(location, size, sizeValue);
 
 				if (firstClick) {
 					firstClick = false;
@@ -84,6 +117,8 @@
 					var delay = 2200-repeatSpeed*200;
 					setTimeout(start, delay);
 				}
+
+				openWindow(location, size, sizeValue);
 			}
 
 			function openFiveWindows() {
@@ -113,6 +148,32 @@
 
 				openedWindows[fensterID] = window.open("gandalf.html", fensterID, "scrollbars=no,width="+width+",height="+height+",screenX="+xPos+",screenY="+yPos);
 				fensterID++;
+
+				updateLifetimeCounter();
+			}
+
+			function getLifetimeCounter(){
+				lifetimeOpened=localStorage.getItem("lifetimeOpened");
+				if(lifetimeOpened==null){
+					lifetimeOpened=0;
+				}
+				else{
+					lifetimeOpened=parseInt(lifetimeOpened);
+					displayLifetimeCounter();
+				}
+			}
+			function updateLifetimeCounter() {
+				lifetimeOpened++;
+				localStorage.setItem("lifetimeOpened", lifetimeOpened);
+				displayLifetimeCounter();
+			}
+			function displayLifetimeCounter() {
+				var lifetimeOpenedBase12 = lifetimeOpened.toString(12);
+				var digits = lifetimeOpenedBase12.split("");
+				digits.forEach(function (digit, i) {
+					document.getElementById("counter").getElementsByTagName("img")[i].src="tengwar_numerals/"+digit+".png";
+				});
+				document.getElementById("tooltip").innerText=lifetimeOpened;
 			}
 
 			function closeAllWindows() {
@@ -127,11 +188,12 @@
 		</script>
 	</head>
 
-	<body onunload="closeAllWindows()">
+	<body onload="getLifetimeCounter()" onunload="closeAllWindows()">
 		<div id="summon"><a href="javascript: allowPopups()">Summon Gandalf</a></div>
 
 		<div class="hidden" id="emblemContainer"><img id="emblem" src="emblem.png" onclick="start()"></div>
 		<div class="hidden" id="emblemContainer"><img id="emblem" src="emblem_rot.png" onclick="openFiveWindows()"></div>
+		<div class="hidden" id="counter"><img><img><img><span id="tooltip"></span></div>
 
 		<form class="hidden" name="controls">
 			<fieldset>
@@ -153,6 +215,5 @@
 		</form>
 
 		<p class="hidden"><a href="javascript:closeAllWindows()">Alle Fenster schließen.</a></p>
-
 	</body>
 </html>
