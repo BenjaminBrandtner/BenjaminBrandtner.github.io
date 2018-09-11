@@ -94,6 +94,9 @@ main{
 	justify-content: center; /*Dist along main axis*/
 	align-items: center; /*Dist along cross axis*/
 }
+li.explanation{
+	list-style: none;
+}
 
 #cardshadow{
 	width: 95%;
@@ -114,10 +117,10 @@ main{
 }
 
 #seperator{
-	flex: 0 0 100px; /*no grow, no shrink, min-width */
+	flex: 0 0 50px; /*no grow, no shrink, min-width */
 }
 #middleseperator{
-	flex: 1 0 100px; /*grow, no shrink, min-width */
+	flex: 1 0 50px; /*grow, no shrink, min-width */
 }
 
 /*Hide Content*/
@@ -127,7 +130,7 @@ main{
 
 /*Make all text a little bigger*/
 p, li {
-	font-size: 1.4em;
+	font-size: 1.2em;
 }
 h1{
 	font-size: 2.5em;
@@ -135,7 +138,7 @@ h1{
 h2{
 	font-size: 2em;
 }
-@media only screen and (max-width: 750px){
+@media only screen and (max-width: 900px){
 #middleseperator, #seperator{
 	flex-shrink: 1;
 }
