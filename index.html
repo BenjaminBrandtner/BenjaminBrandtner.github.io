@@ -1,27 +1,78 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Bennys Seite</title>
-  </head>
-  <body>
-  <h1>This website is scheduled for a redesign real soon! Promise!</h1>
-  <p>Eine Sammlung verschiedener Projekte von mir.</p>
-  <h2>Nützliche Anwendungen</h2>
-  <ul>
-    <li><a href="abschnitte/webprojekte/buchungsspass/index.html">Buchungsspass</a></li>
-    <li><a href="abschnitte/webprojekte/telefonbuch/index.html">Telefonbuch</a></li>
-    <li><a href="abschnitte/andere_projekte/Haushaltsbuch.xlsm">Simples Haushaltsbuch in Excel mit effizientem Eingabeformular</a></li>			 
-  </ul>
-  <h2>Informativ</h2>
-  <ul>
-    <li><a href="ScrumWiki/index.html">ScrumWik</a></li>			 
-    <li><a href="https://github.com/BenjaminBrandtner/realtimeInputInC/blob/master/erkl%C3%A4rung.md">Realtime-Input in C Erklärung</a></li>
-    <li><a href="https://github.com/BenjaminBrandtner/REPL-in-C">Repl in C mit Erklärung</a></li>
-  </ul>
-  <h2>Trash</h2>
-  <ul>	  
-    <li><a href="abschnitte/webprojekte/markierbare_kunst/index.html">Markierbare Kunst</a></li>
-    <li><a href="abschnitte/webprojekte/gandalf/index.html">Gandalf (Warnung! Popups!)</a></li>
-  </ul>
-  </body>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Benny's Webseite</title>
+	<link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="icon" href="images\128, trans black.png">
+	<script src="js/script.js"></script>
+</head>
+
+<body>
+	<!-- The card and its left hand side -->
+	<main id="display">
+
+		<div id="allContent">
+			<div id="seperator"></div>
+
+			<div id="nameAndPic">
+				<h1>Benjamin Brandtner</h1>
+				<a href="javascript:initFlip('landing')"><img id="profilepic" src="images\berndSymbol.png" alt="Bernd Symbol"></a>
+				<p id="quote">Programmierer</p>
+			</div>
+
+			<div id="middleseperator"></div>
+
+			<div id="content"><!-- Right hand side, added dynamically --></div>
+
+			<div id="seperator"></div>
+		</div>
+
+		<ul id="nav">
+			<li><a href="javascript:initFlipH(-1)">&lt;</a></li>
+			<li><a id="navHome" href="javascript:initFlipH(0)">&#8962;</a></li>
+			<li><a href="javascript:initFlipH(1)">&gt;</a></li>
+		</ul>
+	</main>
+
+	<div id="cardshadow"></div>
+
+	<!-- Content for right hand side -->
+	<div id="landing" class="content">
+		<h2>Plenty of projects:</h2>
+		<ul>
+			<li> <a href="javascript:initFlip('pizza')">Pizza</a> </li>
+			<li> <a href="javascript:initFlip('panties')">Panties</a> </li>
+			<li> <a href="javascript:initFlip('placeholder')">Placeholder Text</a> </li>
+		 </ul>
+	</div>
+
+	<div id="panties" class="content">
+		<h2>Playful Panties</h2>
+		<img src="http://images.clipartpanda.com/underwear-clipart-toonvectors-237-140.jpg" alt="">
+	</div>
+
+	<div id="pizza" class="content">
+		<h2>Powerful Pizza</h2>
+		<a href="https://www.dominos.de"><img src="https://cdn.jsdelivr.net/emojione/assets/3.1/png/128/1f355.png" alt=""></a>
+	</div>
+
+	<div id="placeholder" class="content">
+		<h2>Placeholder Text</h2>
+		<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae
+			est. Mauris placerat eleifend leo.</p>
+	</div>
+
+	<!-- Content that is not accessible through the navigation arrows -->
+	<div id="easteregg" class="hiddenContent">
+		<h2>Easter Egg!</h2>
+		<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Easter-Eggs.jpg/320px-Easter-Eggs.jpg" alt="">
+	</div>
+
+</body>
 </html>

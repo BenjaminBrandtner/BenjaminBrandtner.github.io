@@ -1,0 +1,221 @@
+body{
+	/* background-image: linear-gradient(#eee3e7, #ead5dc, #eec9d2, #f4b6c2, #f6abb6); */
+
+	/* background-image: linear-gradient(to top, #011f4b , #03396c , #005b96 , #6497b1 , #b3cde0); */
+
+	background-image: linear-gradient(to bottom, #e3c9c9 , #f4e7e7 , #eedbdb , #e3c9c9 );
+
+	font-family: 'Consolas', 'Roboto Mono', 'Lucida Console', sans-serif;
+	height: 100vh;
+}
+a{
+	text-decoration: none;
+}
+
+/*Inside card*/
+#profilepic{
+	max-width: 200px;
+}
+#nameAndPic{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	white-space: nowrap;
+}
+#quote{
+	font-family: 'Dancing Script', cursive;
+	font-size: 29px;
+}
+#content{
+	flex-grow: 1;
+}
+#content h2{
+	white-space: nowrap;
+}
+#nav{
+	display: flex;
+	justify-content: space-between;
+
+	margin-right: 3%;
+	margin-left: 3%;
+	padding: 0;
+
+	list-style: none;
+	font-family: 'Courier New', Courier, monospace;
+}
+#nav li{
+	text-align: center;
+	border: 2px rgba(255, 255, 255, 0.746) outset;
+	width: 1.8em; /*roughly square-shaped*/
+}
+#nav li a{
+	/*Make clickable area bigger*/
+	display: inline-block; 
+	padding: 0 9px 0 9px;
+
+	font-size: 1.8em;
+	font-weight: bold;
+
+	-webkit-text-stroke: 1px black;
+	color: white;
+}
+
+/*Card itself*/
+main{
+	background-color: white;
+	border: solid black 1px;
+
+	width: 88%;
+	height: 80%; /*Of it's parent, which is body*/
+	min-height: 350px;
+	max-height: 700px;
+	min-width: 500px;
+	max-width: 1100px;
+	margin: auto; /*Center horizontally*/
+
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end; /*Dist along main axis*/
+
+	/*Strip at bottom of card*/
+	background-image: url(text_blau.jpg);
+	background-repeat: repeat-x;
+	background-position: bottom;
+	background-size: 5.2em;
+
+}
+
+#allContent{
+	/*Center vertically in the space between card top and navigation*/
+	margin-top: auto;
+	margin-bottom: auto;
+
+	display: flex;
+	justify-content: center; /*Dist along main axis*/
+	align-items: center; /*Dist along cross axis*/
+}
+
+#cardshadow{
+	width: 95%;
+	height: 35px;
+	min-width: 500px;
+	max-width: 1100px;
+	margin: auto;
+
+	position: relative;
+	top: 7px;
+	z-index: -1;
+
+	background-color: black;
+	border-radius: 50%;
+	transform: rotateX(40deg);
+	-webkit-filter: blur(27px);
+	filter: blur(27px);
+}
+
+#seperator{
+	flex: 0 0 100px; /*no grow, no shrink, min-width */
+}
+#middleseperator{
+	flex: 1 0 100px; /*grow, no shrink, min-width */
+}
+
+/*Hide Content*/
+.content, .hiddenContent{
+	display: none;
+}
+
+/*Make all text a little bigger*/
+p, li {
+	font-size: 1.4em;
+}
+h1{
+	font-size: 2.5em;
+}
+h2{
+	font-size: 2em;
+}
+@media only screen and (max-width: 750px){
+#middleseperator, #seperator{
+	flex-shrink: 1;
+}
+p, li {
+	font-size: 1em;
+}
+h1{
+	font-size: 2em;
+}
+h2{
+	font-size: 1.5em;
+}
+main{
+	background-size: 4em;
+}
+}
+
+/*Animations*/
+.aniFlipH{
+	animation-name: flipH;
+	animation-duration: 1.2s;
+}
+.aniShadowFlipH{
+	animation-name: shadowFlipH;
+	animation-duration: 1.2s;
+}
+.aniFlip{
+	animation-name: flip;
+	animation-duration: 1.2s;
+}
+.aniShadowFlip{
+	animation-name: shadowFlip;
+	animation-duration: 1.2s;
+}
+@keyframes flipH{
+	0% {transform: rotateY(0deg)}
+	50% {transform: rotateY(90deg)}
+	100% {transform: rotateY(000deg)}
+
+}
+@keyframes shadowFlipH{
+	0% {min-width: 7%; width: 95%}
+	5% {min-width: 7%; width: 95%}
+	50% {min-width: 7%; width: 7%;}
+	90% {min-width: 7%; width: 95%}
+	100% {min-width: 7%; width: 95%}
+
+}
+@keyframes flip{
+	0% {transform: rotateX(0deg)}
+	50% {transform: rotateX(90deg)}
+	100% {transform: rotateX(000deg)}
+
+}
+@keyframes shadowFlip{
+	0% {transform: rotateX(40deg)}
+	50% {transform: rotateX(0deg)}
+	100% {transform: rotateX(40deg)}
+
+}
+
+/*Debuggin Helpers*/
+/* #nameAndPic{
+	outline: solid palevioletred 1px;
+}
+#content{
+	outline: 1px skyblue solid;
+} 
+#seperator, #middleseperator{
+	outline: 1px skyblue solid;
+}
+#nav{
+	outline: 1px greenyellow solid;
+}
+#allContent{
+	outline: 1px tan solid;
+} */
+
+/* Help used:
+https://stackoverflow.com/questions/32984008/flexbox-minimum-amount-of-space-between#32985581
+http://www.thejang.net/textures/
+https://thesavvyreader.com/2018/06/20/colourful-covers-to-brighten-your-summer/
+*/
