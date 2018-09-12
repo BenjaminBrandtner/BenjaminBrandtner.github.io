@@ -94,8 +94,15 @@ main{
 	justify-content: center; /*Dist along main axis*/
 	align-items: center; /*Dist along cross axis*/
 }
+
+/*Specific elements*/
 li.explanation{
 	list-style: none;
+}
+img.websitelogo{
+	height: 40px;
+	margin-right: 8px;
+
 }
 
 #cardshadow{
