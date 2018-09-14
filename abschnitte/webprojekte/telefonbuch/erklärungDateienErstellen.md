@@ -1,11 +1,11 @@
-# Problem
+# Dateien Erstellen
 Ich will mit Javascript eine Text-Datei erstellen (z.B. irgendwelche dynamischen Informationen, die die Webseite generiert) die der Nutzer runterladen kann. Klassischerweise würde man dazu die Daten zum Server senden und dann wieder von ihm empfangen, aber dass möchte ich nicht tun. Ich will, dass die Seite komplett offline funktioniert.
 
 ## Lösung 1: Content URIs
 Diese Lösung scheint ein ziemlicher Hack zu sein.  
-Wir erstellen im HTML-DOM ein a-Element, und setzen das href-Attribut auf "data:text/plain;charset=utf-8,gewünschterTexthier".  
-Wir schreiben auch das Attribut download mit dem gewünschten voreigenstellten Dateinamen. Dies bringt die meisten Browser dazu, das was in href angegeben ist, runterzuladen.  
-Wir könnten das erstelle anchor-Element irgendwo im Dokument einfügen, damit der User es jederzeit anklicken kann, oder wir simulieren sofort selbst einen Mausklick auf das anchor-Element.
+Wir erstellen im HTML-DOM ein a-Element, und setzen das href-Attribut auf `data:text/plain;charset=utf-8,gewünschterTexthier`.  
+Wir vergeben dem a-Element auch das Attribut `download` mit dem gewünschten voreigenstellten Dateinamen. Dies bringt die meisten Browser dazu, das was in href angegeben ist, runterzuladen.  
+Wir könnten das erstellte anchor-Element irgendwo im Dokument einfügen, damit der User es jederzeit anklicken kann, oder wir simulieren sofort selbst einen Mausklick darauf.
 ```
 var anchorElement = document.createElement('a');
 anchorElement.setAttribute("href", "data:text/plain;charset=utf-8,HalloWelt");
@@ -19,8 +19,11 @@ anchorElement.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIC
 ```
 
 ## Lösung 2: FileSaver.js
-Dieses Polyfill implementiert den FileSaver der w3c FileAPI der inzwischen aus dieser API entfernt wurde in allen modernen Browsern.  
-Wir erstellen ein Blob-Objekt mit dem gewünschten Inhalt und rufen dann die Funktion SaveAs(blob, dateiname) auf.
+Dieses [Polyfill](https://en.wikipedia.org/wiki/Polyfill_(programming)) implementiert den FileSaver der [w3c FileAPI](https://www.w3.org/TR/FileAPI/) der inzwischen aus dieser wieder API entfernt wurde in allen modernen Browsern.  
+
+## Vorgehen
+1. Wir binden das [FileSaver.js Script](https://github.com/eligrey/FileSaver.js) vor unserem Code ein.
+1. Wir erstellen ein Blob-Objekt mit dem gewünschten Inhalt und rufen dann die Funktion SaveAs(blob, dateiname) auf.
 ```
 var blob = new Blob(["Hallo Welt"], {
  type: "text/plain;charset=utf-8"
