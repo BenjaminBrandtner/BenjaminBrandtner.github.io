@@ -6,7 +6,7 @@ body{
 	background-image: linear-gradient(to bottom, #e3c9c9 , #f4e7e7 , #eedbdb , #e3c9c9 );
 
 	font-family: 'Consolas', 'Roboto Mono', 'Lucida Console', sans-serif;
-	height: 100vh;
+	height: 100%;
 }
 /*Various elements*/
 a{
@@ -96,7 +96,7 @@ main{
 	border: solid black 1px;
 
 	width: 88%;
-	height: 80%; /*Of it's parent, which is body*/
+	height: 100%; /*Of it's parent, which is body*/
 	min-height: 350px;
 	max-height: 700px;
 	min-width: 500px;
