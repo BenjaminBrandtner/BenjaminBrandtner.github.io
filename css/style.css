@@ -106,9 +106,8 @@ main{
 	width: 88%;
 	height: 100%; /*Of it's parent, which is body*/
 	min-height: 350px;
-	max-height: 700px;
 	min-width: 500px;
-	max-width: 1100px;
+	max-width: 1200px;
 	margin: auto; /*Center horizontally*/
 
 	display: flex;
@@ -165,6 +164,9 @@ main{
 }
 
 /*Make all text a little bigger*/
+aside {
+	font-size: 0.8em;
+}
 p, li {
 	font-size: 1.2em;
 }
@@ -177,6 +179,9 @@ h2{
 @media only screen and (max-width: 900px){
 #middleseperator, #seperator{
 	flex-shrink: 1;
+}
+aside {
+	font-size: 0.7em;
 }
 p, li {
 	font-size: 1em;
