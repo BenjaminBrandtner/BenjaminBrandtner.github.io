@@ -10,6 +10,8 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="icon" href="images\128, trans black.png">
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/jquery.tabbable.min.js"></script>
 	<script src="js/script.js"></script>
 </head>
 
@@ -22,7 +24,7 @@
 
 			<div id="nameAndPic">
 				<h1>Benjamin Brandtner</h1>
-				<a href="javascript:initFlip('landing')"><img id="profilepic" src="images\berndSymbol.png" alt="Bernd Symbol"></a>
+				<a tabindex="-1" href="javascript:initFlip('landing')"><img id="profilepic" src="images\berndSymbol.png" alt="Bernd Symbol"></a>
 				<p id="quote">
 					beliebt, beleibt, begabt, bärtig<br>
 					billig, blumig, baufällig, blöd<br>
@@ -39,9 +41,9 @@
 		</div>
 
 		<ul id="nav">
-			<li><a href="javascript:initFlipH(-1)">&lt;</a></li>
+			<li><a tabindex="-1" id="navLeft" href="javascript:initFlipH(-1)">&lt;</a></li>
 			<li><a id="navHome" href="javascript:initFlipH(0)">&#8962;</a></li>
-			<li><a href="javascript:initFlipH(1)">&gt;</a></li>
+			<li><a tabindex="-1" id="navRight" href="javascript:initFlipH(1)">&gt;</a></li>
 		</ul>
 	</main>
 

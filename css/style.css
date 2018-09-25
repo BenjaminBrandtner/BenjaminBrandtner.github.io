@@ -12,6 +12,14 @@ body{
 a{
 	text-decoration: none;
 }
+a:focus{
+	outline: none;
+	color:rgb(0, 240, 0);
+}
+a:focus > img.websitelogo{
+	position: relative;
+	bottom: 12px;
+}
 ul{
 	padding: 6px;
 	padding-left: 8px;

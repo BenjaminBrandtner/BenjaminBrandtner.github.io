@@ -23,7 +23,12 @@ function init() {
 	for (var i = 0; i < allContent.length; i++) {
 		contentOrder[i] = allContent[i].id;
 	}
+
+	document.addEventListener("keydown", function (e) {
+		evaluateKeypress(e.key);
+	});
 }
+
 function initFlip(dest) {
 	/* Soll aus dem HTML-Dokument aufgerufen werden, beim Klicken eines Links. Der Name des gewünschten Inhalts (=ID des gewünschten div.content-Blocks) muss übergeben werden */
 	if (document.getElementById("display").className == "aniFlip" || document.getElementById("display").className == "aniFlipH") {
@@ -92,6 +97,32 @@ function changeContent(dest) {
 	document.getElementById("content").innerHTML = document.getElementById(dest).innerHTML;
 }
 
+function evaluateKeypress(key) {
+	if (document.getElementById("display").className == "aniFlip" || document.getElementById("display").className == "aniFlipH") {
+		//Animation in progress, don't do anything
+	}
+	else if(key=="ArrowRight")
+	{
+		document.getElementById("navRight").focus();
+		window.setTimeout(()=>{document.getElementById("navRight").click()},100);
+	}
+	else if(key=="ArrowLeft")
+	{
+		document.getElementById("navLeft").focus();
+		window.setTimeout(()=>{document.getElementById("navLeft").click()},100);
+	}
+	else if(key=="ArrowDown")
+	{
+			$.tabNext();
+			//In Chrome after pressing a link with the mouse the focus function is unreliable at putting an outline at the focused element. So in the css I disabled outlines permanently and change the text color instead.
+	}
+	else if(key=="ArrowUp")
+	{
+			$.tabPrev();
+	}
+	
+}
+
 function checkCheatcode(direction) {
 	lastInputs.push(direction);
 	lastInputsStr=lastInputs.toString();
@@ -103,7 +134,6 @@ function checkCheatcode(direction) {
 		document.getElementById("navHome").setAttribute("href", "javascript:easteregg()")
 	}
 }
-
 function easteregg() {
 	initFlip("easteregg");
 	document.getElementById("navHome").setAttribute("href", "javascript:endEasteregg()")
@@ -114,7 +144,6 @@ function easteregg() {
 	document.getElementsByTagName('main')[0].style.backgroundImage = "URL(../css/rainbow.gif)";
 	document.getElementsByTagName('body')[0].style.backgroundImage = "URL(../css/rainbow.gif)";
 }
-
 function endEasteregg() {
 	initFlip("landing");
 	document.getElementsByTagName('body')[0].style.backgroundImage = originalBackgroundBody;
