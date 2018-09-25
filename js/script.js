@@ -1,34 +1,38 @@
 document.addEventListener("DOMContentLoaded", function () {
-	changeContent("landing");
 	init();
 
 });
 
 //Global Variables
-var contentOrder = new Array; 
 var curPage;
+var contentOrder = new Array; 
 var lastInputs = new Array;
+
+//Animation Timings, as defined in css
 var aniDuration = 1200; //in ms
 var aniDelay = 0; //in ms
 
+//needed when Easteregg is activated
 var originalBackgroundMain;
 var originalBackgroundBody;
+
 //Functions
 function init() {
+	changeContent("landing");
 	var allContent = document.getElementsByClassName("content");
 	for (var i = 0; i < allContent.length; i++) {
 		contentOrder[i] = allContent[i].id;
 	}
 }
-function initFlip(name) {
-	/* Soll aus dem HTML-Dokument aufgerufen werden, beim Klicken eines Links. Der Name des gewünschten Inhalts (identisch mit der ID des passenden main-Blockes) muss übergeben werden */
+function initFlip(dest) {
+	/* Soll aus dem HTML-Dokument aufgerufen werden, beim Klicken eines Links. Der Name des gewünschten Inhalts (=ID des gewünschten div.content-Blocks) muss übergeben werden */
 	if (document.getElementById("display").className == "aniFlip" || document.getElementById("display").className == "aniFlipH") {
 		//Animation in progress, don't do anything
 	}
 	else {
 		document.getElementById("display").className = "aniFlip";
 		document.getElementById("cardshadow").className = "aniShadowFlip";
-		setTimeout(function () { changeContent(name); }, aniDuration / 2 + aniDelay);
+		setTimeout(function () { changeContent(dest); }, aniDuration / 2 + aniDelay);
 		setTimeout(removeFlip, aniDuration + aniDelay);
 	}
 }
@@ -39,40 +43,41 @@ function initFlipH(direction) {
 		//Animation in progress, don't do anything
 	}
 	else {
-		cheatcode(direction);
+		checkCheatcode(direction);
+
 		//Retrieve index of previous page
-		var newPageIndex;
+		var destIndex;
 		for (i = 0; i < contentOrder.length; i++) {
 			if (contentOrder[i] == curPage) {
-				newPageIndex = i;
+				destIndex = i;
 			}
 		}
 		//Decide new page based on direction, loop around if on the edges
 		if (direction == -1) {
-			if (newPageIndex == 0) {
-				newPageIndex = contentOrder.length - 1;
+			if (destIndex == 0) {
+				destIndex = contentOrder.length - 1;
 			}
 			else {
-				newPageIndex--;
+				destIndex--;
 			}
 		}
 		else if (direction == 0) {
-			newPageIndex = 0;
+			destIndex = 0;
 		}
 		else if (direction == 1) {
-			if (newPageIndex == contentOrder.length - 1) {
-				newPageIndex = 0;
+			if (destIndex == contentOrder.length - 1) {
+				destIndex = 0;
 			}
 			else {
-				newPageIndex++;
+				destIndex++;
 			}
 		}
-		var newPage = contentOrder[newPageIndex];
+		var dest = contentOrder[destIndex];
 
 		//Actual Flipping and content change
 		document.getElementById("display").className = "aniFlipH";
 		document.getElementById("cardshadow").className = "aniShadowFlipH";
-		setTimeout(function () { changeContent(newPage); }, aniDuration / 2 + aniDelay);
+		setTimeout(function () { changeContent(dest); }, aniDuration / 2 + aniDelay);
 		setTimeout(removeFlip, aniDuration + aniDelay);
 	}
 }
@@ -82,19 +87,18 @@ function removeFlip() {
 	document.getElementById("cardshadow").className = "";
 }
 
-function changeContent(name) {
-	curPage=name;
-	console.log(name + " wird aufgerufen");
-	document.getElementById("content").innerHTML = document.getElementById(name).innerHTML;
+function changeContent(dest) {
+	curPage=dest;
+	document.getElementById("content").innerHTML = document.getElementById(dest).innerHTML;
 }
 
-function cheatcode(direction) {
+function checkCheatcode(direction) {
 	lastInputs.push(direction);
 	lastInputsStr=lastInputs.toString();
 	
 	if (lastInputsStr.includes("-1,1,-1,1")) {
 		console.log("Success!");
-		lastInputs.splice(0,lastInputs.length);
+		lastInputs.splice(0,lastInputs.length); //clear the array
 
 		document.getElementById("navHome").setAttribute("href", "javascript:easteregg()")
 	}
